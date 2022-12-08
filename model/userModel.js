@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const userSchema = new mongoose.Schema({
+const blogSpotUserSchema = new mongoose.Schema({
     _id:{
         type:String,
         required:true
@@ -34,5 +34,5 @@ const userSchema = new mongoose.Schema({
 })
 
 // module.exports = mongoose.model('cryptoUserModel',userSchema,'CryptoUsers');
-const CryptoUser = mongoose.model('CryptoUser',userSchema);
-module.exports = CryptoUser ;
+const BlogSpotUser = mongoose.model('BlogSpotUser',blogSpotUserSchema);
+module.exports = BlogSpotUser ;

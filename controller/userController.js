@@ -1,4 +1,4 @@
-const CryptoUserModel = require('../model/userModel');
+const BlogSpotUserModel = require('../model/userModel');
 const { v4 : uuidv4 } = require('uuid')
 const bcrypt  = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -9,12 +9,12 @@ const SECRET_KEY = "THIS IS MY SECRET KEY FOR JWT"
 // FOR REGISTERING NEW USER
 function RegisterUser(req,res){
     const newUserInfo = req.body;
-    CryptoUserModel.findOne({email:newUserInfo.email},(err,user)=>{
+    BlogSpotUserModel.findOne({email:newUserInfo.email},(err,user)=>{
         if(user){
             res.status(404).send('User With Given Email Already Exist');
         }
         else if(!user){
-            let newUser = new CryptoUserModel({
+            let newUser = new BlogSpotUserModel({
                 _id:uuidv4(),
                 firstname:newUserInfo.firstname,
                 lastname:newUserInfo.lastname,
@@ -40,7 +40,7 @@ function RegisterUser(req,res){
 // TO CHECK USER EXIST IN DATABASE OR NOT
 function UserLogin(req,res){
     const existingUser = req.body;
-    CryptoUserModel.findOne({email:existingUser.email},(err,user)=>{
+    BlogSpotUserModel.findOne({email:existingUser.email},(err,user)=>{
         if(user){
             if(bcrypt.compareSync(existingUser.password,user.password)){ 
                 console.log(user._id)
@@ -64,7 +64,7 @@ function UserLogin(req,res){
 function GetProfile(req,res){
        let userid =  VerifyToken(req.headers.authorization)
        console.log(userid);
-        CryptoUserModel.findOne({_id:userid},(err,user)=>{
+        BlogSpotUserModel.findOne({_id:userid},(err,user)=>{
             if(user&&!err){
                 res.status(200).send(user)
                 return;
